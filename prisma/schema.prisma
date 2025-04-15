@@ -1,14 +1,99 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model afiliaciones {
+  id_afiliaciones       String                 @id @db.Char(36)
+  id_obra_social        String?                @db.Char(36)
+  id_plan               String?                @db.Char(36)
+  nro_credencial        Int?
+  obras_sociales        obras_sociales?        @relation(fields: [id_obra_social], references: [id_obra_social], onDelete: Cascade, onUpdate: NoAction, map: "FK_afiliaciones_obras_sociales")
+  planes_obras_sociales planes_obras_sociales? @relation(fields: [id_plan], references: [id_plan], onDelete: Cascade, onUpdate: NoAction, map: "FK_afiliaciones_planes_obras_sociales")
+  usuarios              usuarios[]
+
+  @@index([id_obra_social], map: "FK_afiliaciones_obras_sociales")
+  @@index([id_plan], map: "FK_afiliaciones_planes_obras_sociales")
+}
+
+model estados {
+  id_estado   String  @id @db.Char(36)
+  id_turno    String? @db.Char(36)
+  descripcion String? @db.VarChar(50)
+  turnos      turnos? @relation(fields: [id_turno], references: [id_turno], onDelete: Cascade, onUpdate: NoAction, map: "FK_estados_turnos")
+
+  @@index([id_turno], map: "FK_estados_turnos")
+}
+
+model imagenes {
+  id_imagen String  @id @db.Char(36)
+  id_nota   String? @db.Char(36)
+  imagen    String? @db.Text
+  notas     notas?  @relation(fields: [id_nota], references: [id_nota], onDelete: Cascade, onUpdate: NoAction, map: "FK_imagenes_notas")
+
+  @@index([id_nota], map: "FK_imagenes_notas")
+}
+
+model notas {
+  id_nota  String     @id @db.Char(36)
+  id_turno String?    @db.Char(36)
+  nota     String?    @db.Text
+  imagenes imagenes[]
+  turnos   turnos?    @relation(fields: [id_turno], references: [id_turno], onDelete: Cascade, onUpdate: NoAction, map: "FK__turnos")
+
+  @@index([id_turno], map: "FK__turnos")
+}
+
+model obras_sociales {
+  id_obra_social        String                  @id @db.Char(36)
+  nombre                String?                 @db.VarChar(50)
+  descripcion           String?                 @db.Text
+  afiliaciones          afiliaciones[]
+  planes_obras_sociales planes_obras_sociales[]
+}
+
+model planes_obras_sociales {
+  id_plan        String          @id @db.Char(36)
+  id_obra_social String?         @db.Char(36)
+  descripcion    String?         @db.Text
+  afiliaciones   afiliaciones[]
+  obras_sociales obras_sociales? @relation(fields: [id_obra_social], references: [id_obra_social], onDelete: Cascade, onUpdate: NoAction, map: "FK_planes_obras_sociales_obras_sociales")
+
+  @@index([id_obra_social], map: "FK_planes_obras_sociales_obras_sociales")
+}
+
+model turnos {
+  id_turno                              String    @id @db.Char(36)
+  id_paciente                           String?   @db.Char(36)
+  id_medico                             String?   @db.Char(36)
+  fecha                                 DateTime? @db.Date
+  hora                                  DateTime? @db.Time(0)
+  estado                                String?   @db.VarChar(50)
+  estados                               estados[]
+  notas                                 notas[]
+  usuarios_turnos_id_pacienteTousuarios usuarios? @relation("turnos_id_pacienteTousuarios", fields: [id_paciente], references: [id_usuario], onDelete: Cascade, onUpdate: NoAction, map: "FK__usuarios")
+  usuarios_turnos_id_medicoTousuarios   usuarios? @relation("turnos_id_medicoTousuarios", fields: [id_medico], references: [id_usuario], onDelete: Cascade, onUpdate: NoAction, map: "FK__usuarios_2")
+
+  @@index([id_paciente], map: "FK__usuarios")
+  @@index([id_medico], map: "FK__usuarios_2")
+}
+
+model usuarios {
+  id_usuario                          String        @id @db.Char(36)
+  id_afiliacion                       String?       @db.Char(36)
+  nombre                              String?       @db.VarChar(50)
+  apellido                            String?       @db.VarChar(50)
+  mail                                String?       @db.VarChar(50)
+  contrasenia                         String?       @db.Text
+  rol                                 String?       @db.VarChar(50)
+  especialidad                        String?       @db.VarChar(50)
+  turnos_turnos_id_pacienteTousuarios turnos[]      @relation("turnos_id_pacienteTousuarios")
+  turnos_turnos_id_medicoTousuarios   turnos[]      @relation("turnos_id_medicoTousuarios")
+  afiliaciones                        afiliaciones? @relation(fields: [id_afiliacion], references: [id_afiliaciones], onDelete: Cascade, onUpdate: NoAction, map: "FK_usuarios_afiliaciones")
+
+  @@index([id_afiliacion], map: "FK_usuarios_afiliaciones")
 }
