@@ -6,6 +6,8 @@ export const generateToken = jwtData => {
 };
 
 export const validateToken = (req, res, next) => {
+  console.log('Validando token...');
+
   const accessToken = req.headers['authorization'];
 
   if (!accessToken) return res.status(401).json({ message: 'Access denied' });
