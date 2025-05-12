@@ -59,6 +59,7 @@ model obras_sociales {
 model planes_obras_sociales {
   id_plan        String          @id @db.Char(36)
   id_obra_social String?         @db.Char(36)
+  nombre_plan    String?         @db.VarChar(50)
   descripcion    String?         @db.Text
   afiliaciones   afiliaciones[]
   obras_sociales obras_sociales? @relation(fields: [id_obra_social], references: [id_obra_social], onDelete: Cascade, onUpdate: NoAction, map: "FK_planes_obras_sociales_obras_sociales")
@@ -91,6 +92,9 @@ model usuarios {
   contrasenia                         String?       @db.Text
   rol                                 String?       @db.VarChar(50)
   especialidad                        String?       @db.VarChar(50)
+  pfp                                 String?       @db.Text
+  disponibilidad                      String?       @db.VarChar(50)
+  direccion                           String?       @db.VarChar(50)
   turnos_turnos_id_pacienteTousuarios turnos[]      @relation("turnos_id_pacienteTousuarios")
   turnos_turnos_id_medicoTousuarios   turnos[]      @relation("turnos_id_medicoTousuarios")
   afiliaciones                        afiliaciones? @relation(fields: [id_afiliacion], references: [id_afiliaciones], onDelete: Cascade, onUpdate: NoAction, map: "FK_usuarios_afiliaciones")

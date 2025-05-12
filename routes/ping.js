@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { validateToken } from '../middlewares/authenticator.js';
 
 const pingRouter = Router();
 
@@ -19,7 +20,9 @@ const pingRouter = Router();
  *               example: pong!
  */
 
-pingRouter.get('/ping', (req, res) => {
+pingRouter.get('/ping', validateToken, (req, res) => {
+  console.log(req.jwtData);
+
   res.send('pong!');
 });
 
