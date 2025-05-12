@@ -7,6 +7,7 @@ import specs from './swagger/swagger.js';
 import loginRouter from './routes/auth/login.js';
 import registerRouter from './routes/auth/register.js';
 import authRouter from './routes/auth/authUser.js';
+import turnosRouter from './routes/turnos/turnos.js';
 
 const app = express();
 const PORT = process.env.PORT || 3550;
@@ -21,6 +22,7 @@ app.use('/api', pingRouter);
 app.use('/api', registerRouter);
 app.use('/api', loginRouter);
 app.use('/api', authRouter);
+app.use('/api', turnosRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on https//localhost:${PORT}`);
