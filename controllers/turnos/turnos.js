@@ -3,7 +3,7 @@ import {
   getTurnosMedicoSVC,
   getTurnosStatusSVC,
   reservarTurnoSVC,
-} from '../../../services/turnos/turnos.js';
+} from '../../services/turnos/turnos.js';
 
 export const getTurnosMedicoCTL = async (req, res) => {
   const { id_medico } = req.params;

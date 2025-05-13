@@ -1,6 +1,6 @@
-import prisma from "../../../prisma/prisma.js";
+import prisma from '../../prisma/prisma.js';
 
-export const getMedicosPorEspecialidadSVC = async (especialidad) => {
+export const getMedicosPorEspecialidadSVC = async especialidad => {
   try {
     const medicos = await prisma.usuarios.findMany({
       where: {
@@ -19,9 +19,9 @@ export const getMedicosPorEspecialidadSVC = async (especialidad) => {
     console.error(error);
     return 500;
   }
-}
+};
 
-export const getMedicoPorIdSVC = async (id) => {
+export const getMedicoPorIdSVC = async id => {
   try {
     const medico = await prisma.usuarios.findUnique({
       where: {
@@ -42,4 +42,4 @@ export const getMedicoPorIdSVC = async (id) => {
     console.error(error);
     return 500;
   }
-}
+};
