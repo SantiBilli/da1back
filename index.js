@@ -8,6 +8,7 @@ import loginRouter from './routes/auth/login.js';
 import registerRouter from './routes/auth/register.js';
 import authRouter from './routes/auth/authUser.js';
 import turnosRouter from './routes/turnos/turnos.js';
+import homeRouter from './routes/home/home.js';
 
 const app = express();
 const PORT = process.env.PORT || 3550;
@@ -23,6 +24,7 @@ app.use('/api', registerRouter);
 app.use('/api', loginRouter);
 app.use('/api', authRouter);
 app.use('/api', turnosRouter);
+app.use('/api', homeRouter)
 
 app.listen(PORT, () => {
   console.log(`Server listening on https//localhost:${PORT}`);
