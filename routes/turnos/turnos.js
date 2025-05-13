@@ -1,11 +1,11 @@
 import { Router } from 'express';
+import { validateToken } from '../../middlewares/authenticator.js';
 import {
   cancelarTurnoCTL,
   getTurnosMedicoCTL,
   reservarTurnoCTL,
   turnosStatusCTL,
-} from '../../controllers/auth/turnos/turnos.js';
-import { validateToken } from '../../middlewares/authenticator.js';
+} from '../../controllers/turnos/turnos.js';
 
 const turnosRouter = Router();
 
