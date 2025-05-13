@@ -12,6 +12,7 @@ export const getMedicosPorEspecialidadSVC = async especialidad => {
         nombre: true,
         apellido: true,
         especialidad: true,
+        disponibilidad: true,
       },
     });
     return medicos;
@@ -25,7 +26,7 @@ export const getMedicoPorIdSVC = async id => {
   try {
     const medico = await prisma.usuarios.findUnique({
       where: {
-        id_usuario: parseInt(id),
+        id_usuario: id,
         rol: 'medico',
       },
       select: {
@@ -33,8 +34,7 @@ export const getMedicoPorIdSVC = async id => {
         nombre: true,
         apellido: true,
         especialidad: true,
-        telefono: true,
-        correo: true,
+        mail: true,
       },
     });
     return medico;
