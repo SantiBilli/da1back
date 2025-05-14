@@ -88,13 +88,15 @@ model usuarios {
   id_afiliacion                       String?       @db.Char(36)
   nombre                              String?       @db.VarChar(50)
   apellido                            String?       @db.VarChar(50)
-  mail                                String?       @db.VarChar(50)
+  mail                                String?       @unique(map: "mail") @db.VarChar(50)
   contrasenia                         String?       @db.Text
   rol                                 String?       @db.VarChar(50)
   especialidad                        String?       @db.VarChar(50)
   pfp                                 String?       @db.Text
   disponibilidad                      String?       @db.VarChar(50)
   direccion                           String?       @db.VarChar(50)
+  token                               String?       @db.Text
+  dateExpire                          DateTime?     @db.DateTime(0)
   turnos_turnos_id_pacienteTousuarios turnos[]      @relation("turnos_id_pacienteTousuarios")
   info_medico                         turnos[]      @relation("turnos_id_medicoTousuarios")
   afiliaciones                        afiliaciones? @relation(fields: [id_afiliacion], references: [id_afiliaciones], onDelete: Cascade, onUpdate: NoAction, map: "FK_usuarios_afiliaciones")
