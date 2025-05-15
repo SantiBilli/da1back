@@ -11,6 +11,8 @@ import turnosRouter from './routes/turnos/turnos.js';
 import homeRouter from './routes/home/home.js';
 import obraSocialRouter from './routes/obra-social/obraSocial.js';
 import forgotPasswordRouter from './routes/password-recovery/forgot-password.js';
+import changePasswordRouter from './routes/profile/change-password.js';
+import profileRouter from './routes/profile/profile.js';
 
 const app = express();
 const PORT = process.env.PORT || 3550;
@@ -29,6 +31,8 @@ app.use('/api', turnosRouter);
 app.use('/api', homeRouter);
 app.use('/api', obraSocialRouter);
 app.use('/api', forgotPasswordRouter);
+app.use('/api', changePasswordRouter);
+app.use('/api', profileRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on https//localhost:${PORT}`);
