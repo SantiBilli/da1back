@@ -7,7 +7,6 @@ const profileRouter = Router();
 
 profileRouter.get('/profiles', validateToken, getProfilesCTL);
 profileRouter.patch('/profiles', validateToken, upload.single('image'), updateProfileCTL);
-profileRouter.get('/historiales', (req, res) => {});
 
 
 export default profileRouter;
