@@ -89,3 +89,60 @@ export const getTurnosStatusSVC = async (status, id_usuario) => {
     return 500;
   }
 };
+
+export const getTurnosFechasSVC = async id_medico => {
+  try {
+    let fechasMedico = await prisma.turnos.findMany({
+      where: {
+        id_medico: id_medico,
+      },
+      select: {
+        fecha: true,
+      },
+      distinct: ['fecha'],
+      orderBy: {
+        fecha: 'asc',
+      },
+    });
+
+    if (fechasMedico.length != 0) {
+      fechasMedico = fechasMedico.map(f => ({
+        fecha: f.fecha.toISOString().split('T')[0], // "YYYY-MM-DD"
+      }));
+    }
+
+    return fechasMedico;
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getTurnosHorariosSVC = async fecha => {
+  try {
+    let horariosMedico = await prisma.turnos.findMany({
+      where: {
+        fecha: new Date(fecha),
+      },
+      select: {
+        id_turno: true,
+        hora: true,
+      },
+      orderBy: {
+        hora: 'asc',
+      },
+    });
+
+    if (horariosMedico.length !== 0) {
+      horariosMedico = horariosMedico.map(t => ({
+        id_turno: t.id_turno,
+        hora: t.hora.toTimeString().split(' ')[0], // Formato: "HH:mm:ss"
+      }));
+    }
+
+    return horariosMedico;
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
