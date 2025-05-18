@@ -19,11 +19,14 @@ export const loginCTL = async (req, res) => {
 
   const token = generateToken({ id_usuario: userData.id_usuario, mail: bodyParams.mail });
 
-  return res.json({
-    token: token,
-    userData: {
-      id_usuario: userData.id_usuario,
-      mail: bodyParams.mail,
+  return res.status(200).json({
+    data: {
+      token: token,
+      userData: {
+        id_usuario: userData.id_usuario,
+        mail: bodyParams.mail,
+      },
     },
+    message: 'Login successful',
   });
 };
