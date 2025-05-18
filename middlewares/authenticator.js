@@ -6,9 +6,9 @@ export const generateToken = jwtData => {
 };
 
 export const validateToken = (req, res, next) => {
-  console.log('Validando token...');
-
   const accessToken = req.headers['authorization'];
+
+  console.log('Validando token...', accessToken);
 
   if (!accessToken) return res.status(401).json({ message: 'Access denied' });
   else {
@@ -18,8 +18,6 @@ export const validateToken = (req, res, next) => {
         return res.status(401).json({ message: 'Access Denied. Token Expirado o Incorrecto' });
       } else {
         req.jwtData = jwtData;
-        const newToken = generateToken({ userId: jwtData.userId, email: jwtData.email });
-        res.setHeader('Authorization', `Bearer ${newToken}`);
 
         next();
       }

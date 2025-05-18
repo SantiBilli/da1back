@@ -13,6 +13,8 @@ export const getMedicosPorEspecialidadSVC = async especialidad => {
         apellido: true,
         especialidad: true,
         disponibilidad: true,
+        direccion: true,
+        pfp: true,
       },
     });
     return medicos;
