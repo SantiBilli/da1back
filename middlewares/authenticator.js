@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-export const generateToken = jwtData => {
-  return jwt.sign(jwtData, process.env.API_KEY, { expiresIn: '2h' });
+export const generateToken = (jwtData, remember = false) => {
+  const options = remember ? {} : { expiresIn: '2h' };
+  return jwt.sign(jwtData, process.env.API_KEY, options);
 };
 
 export const validateToken = (req, res, next) => {
