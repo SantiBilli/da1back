@@ -10,7 +10,6 @@ export const emailExistsSVC = async mail => {
         mail: true,
       },
     });
-
     return validateEmail && 409;
   } catch (error) {
     console.error(error);

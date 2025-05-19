@@ -6,6 +6,8 @@ import { loginSVC } from '../../services/auth/login.js';
 export const loginCTL = async (req, res) => {
   const bodyParams = req.body;
 
+  console.log(bodyParams);
+
   const userId = v4();
 
   const userData = await loginSVC(bodyParams.mail);
@@ -17,13 +19,19 @@ export const loginCTL = async (req, res) => {
 
   if (!match) return res.status(401).json({ message: 'Invalid credentials' }); //401 Unauthorized
 
-  const token = generateToken({ id_usuario: userData.id_usuario, mail: bodyParams.mail });
+  const token = generateToken(
+    { id_usuario: userData.id_usuario, mail: bodyParams.mail },
+    bodyParams.recordar
+  );
 
-  return res.json({
-    token: token,
-    userData: {
-      id_usuario: userData.id_usuario,
-      mail: bodyParams.mail,
+  return res.status(200).json({
+    data: {
+      token: token,
+      userData: {
+        id_usuario: userData.id_usuario,
+        mail: bodyParams.mail,
+      },
     },
+    message: 'Login successful',
   });
 };
