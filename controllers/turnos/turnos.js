@@ -14,7 +14,7 @@ export const getTurnosMedicoCTL = async (req, res) => {
 
   if (turnos == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
-  return res.status(200).json(turnos);
+  return res.status(200).json({ data: turnos, message: 'Turnos encontrados' });
 };
 
 export const reservarTurnoCTL = async (req, res) => {
@@ -46,7 +46,7 @@ export const turnosStatusCTL = async (req, res) => {
 
   if (turnos == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
-  return res.status(200).json(turnos);
+  return res.status(200).json({ data: turnos, message: 'Turnos encontrados' });
 };
 
 export const getTurnosFechasCTL = async (req, res) => {
@@ -56,7 +56,7 @@ export const getTurnosFechasCTL = async (req, res) => {
 
   if (fechas == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
-  return res.status(200).json(fechas);
+  return res.status(200).json({ data: fechas, message: 'Fechas encontradas' });
 };
 
 export const getTurnosHorariosCTL = async (req, res) => {
@@ -66,5 +66,5 @@ export const getTurnosHorariosCTL = async (req, res) => {
 
   if (horarios == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
-  return res.status(200).json(horarios);
+  return res.status(200).json({ data: horarios, message: 'Horarios encontrados' });
 };
