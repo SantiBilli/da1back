@@ -37,6 +37,7 @@ export const getMedicoPorIdSVC = async id => {
         apellido: true,
         especialidad: true,
         mail: true,
+        direccion: true,
       },
     });
     return medico;
