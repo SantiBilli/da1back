@@ -6,7 +6,7 @@ import { loginSVC } from '../../services/auth/login.js';
 export const loginCTL = async (req, res) => {
   const bodyParams = req.body;
 
-  console.log(bodyParams);
+  // console.log(bodyParams);
 
   const userId = v4();
 

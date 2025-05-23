@@ -123,6 +123,7 @@ export const getTurnosHorariosSVC = async fecha => {
     let horariosMedico = await prisma.turnos.findMany({
       where: {
         fecha: new Date(fecha),
+        estado: 'disponible',
       },
       select: {
         id_turno: true,
@@ -136,7 +137,7 @@ export const getTurnosHorariosSVC = async fecha => {
     if (horariosMedico.length !== 0) {
       horariosMedico = horariosMedico.map(t => ({
         id_turno: t.id_turno,
-        hora: t.hora.toTimeString().split(' ')[0], // Formato: "HH:mm:ss"
+        hora: t.hora.toISOString().split('T')[1], // Formato: "HH:mm:ss"
       }));
     }
 
