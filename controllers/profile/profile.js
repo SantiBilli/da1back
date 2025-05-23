@@ -11,6 +11,7 @@ export const getProfilesCTL = async (req, res) => {
 
 export const updateProfileCTL = async (req, res) => {
   const { nombre, apellido, mail } = req.body;
+  console.log(nombre, apellido, mail);
   const image = req.file;
   const id_usuario = req.jwtData.id_usuario;
 
