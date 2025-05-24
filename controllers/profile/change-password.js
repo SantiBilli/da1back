@@ -9,7 +9,7 @@ export const changePasswordCTL = async (req, res) => {
 
   const comparePassword = await bcrypt.compare(actualPassword, userDataPassword.contrasenia);
 
-  if (!comparePassword) return res.status(401).json({ message: 'La contraseña actual no es correcta' });
+  if (!comparePassword) return res.status(409).json({ message: 'La contraseña actual no es correcta' });
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
