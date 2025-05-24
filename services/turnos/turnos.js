@@ -78,6 +78,7 @@ export const getTurnosStatusSVC = async (status, id_usuario) => {
             especialidad: true,
             nombre: true,
             apellido: true,
+            pfp: true,
           },
         },
       },
