@@ -1,4 +1,9 @@
-import { getProfilesSVC, updateProfileSVC, deleteOldPfpSVC } from '../../services/profile/profile.js';
+import {
+  getProfilesSVC,
+  updateProfileSVC,
+  deleteOldPfpSVC,
+  deleteProfileSVC,
+} from '../../services/profile/profile.js';
 import { emailExistsSVC } from '../../services/auth/register.js';
 import fs from 'fs';
 
@@ -38,4 +43,18 @@ export const updateProfileCTL = async (req, res) => {
   );
   if (updateProfile == 500) return res.status(500).json({ message: 'Internal Server Error' });
   res.status(200).json({ message: 'Profile updated successfully' });
+};
+
+export const deleteProfileCTL = async (req, res) => {
+  const id_usuario = req.jwtData.id_usuario;
+  const oldPfp = await deleteOldPfpSVC(id_usuario);
+  if (oldPfp == 500) return res.status(500).json({ message: 'Internal Server Error' });
+
+  if (oldPfp.pfp != null) {
+    fs.unlinkSync('uploads/pfp/' + oldPfp.pfp);
+  }
+
+  const deleteProfile = await deleteProfileSVC(id_usuario);
+  if (deleteProfile == 500) return res.status(500).json({ message: 'Internal Server Error' });
+  res.status(200).json({ message: 'Profile deleted successfully' });
 };

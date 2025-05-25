@@ -41,11 +41,10 @@ export const getProfilesSVC = async id_usuario => {
 export const updateProfileSVC = async (id_usuario, nombre, apellido, mail, pfp) => {
   try {
     const dataUpdate = {};
-    if (nombre != "") dataUpdate.nombre = nombre;
-    if (apellido != "") dataUpdate.apellido = apellido;
+    if (nombre != '') dataUpdate.nombre = nombre;
+    if (apellido != '') dataUpdate.apellido = apellido;
     if (mail) dataUpdate.mail = mail;
     // if (pfp) dataUpdate.pfp = pfp;
-
 
     const profile = await prisma.usuarios.update({
       where: {
@@ -68,6 +67,20 @@ export const deleteOldPfpSVC = async id_usuario => {
       },
       select: {
         pfp: true,
+      },
+    });
+    return profile;
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const deleteProfileSVC = async id_usuario => {
+  try {
+    const profile = await prisma.usuarios.delete({
+      where: {
+        id_usuario: id_usuario,
       },
     });
     return profile;
