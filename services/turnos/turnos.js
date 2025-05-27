@@ -50,7 +50,7 @@ export const cancelarTurnoSVC = async id_turno => {
         id_turno: id_turno,
       },
       data: {
-        estado: 'cancelado',
+        estado: 'disponible',
       },
     });
 
