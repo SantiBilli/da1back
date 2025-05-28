@@ -27,6 +27,7 @@ export const updateProfileCTL = async (req, res) => {
 
   if (image) {
     const oldPfp = await deleteOldPfpSVC(id_usuario);
+
     if (oldPfp == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
     if (oldPfp.pfp != null) {
@@ -42,7 +43,7 @@ export const updateProfileCTL = async (req, res) => {
     image ? image.filename : null
   );
   if (updateProfile == 500) return res.status(500).json({ message: 'Internal Server Error' });
-  res.status(200).json({ message: 'Profile updated successfully' });
+  res.status(200).json({ data: { pfp: image?.filename }, message: 'Profile updated successfully' });
 };
 
 export const deleteProfileCTL = async (req, res) => {

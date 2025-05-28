@@ -44,7 +44,7 @@ export const updateProfileSVC = async (id_usuario, nombre, apellido, mail, pfp) 
     if (nombre != '') dataUpdate.nombre = nombre;
     if (apellido != '') dataUpdate.apellido = apellido;
     if (mail) dataUpdate.mail = mail;
-    // if (pfp) dataUpdate.pfp = pfp;
+    if (pfp) dataUpdate.pfp = pfp;
 
     const profile = await prisma.usuarios.update({
       where: {
