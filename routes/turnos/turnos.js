@@ -2,12 +2,14 @@ import { Router } from 'express';
 import { validateToken } from '../../middlewares/authenticator.js';
 import {
   cancelarTurnoCTL,
+  getTurnoByIdCTL,
   getTurnosFechasCTL,
   getTurnosHorariosCTL,
   getTurnosMedicoCTL,
   reservarTurnoCTL,
   turnosStatusCTL,
 } from '../../controllers/turnos/turnos.js';
+import { getTurnoByIdSVC } from '../../services/turnos/turnos.js';
 
 const turnosRouter = Router();
 
@@ -18,5 +20,6 @@ turnosRouter.get('/turnos/:status', validateToken, turnosStatusCTL);
 
 turnosRouter.get('/fechas/:id_medico', validateToken, getTurnosFechasCTL);
 turnosRouter.get('/horarios/:fecha', validateToken, getTurnosHorariosCTL);
+turnosRouter.get('/turnos-info/:id_turno', validateToken, getTurnoByIdCTL);
 
 export default turnosRouter;

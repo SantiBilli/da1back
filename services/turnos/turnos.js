@@ -148,3 +148,47 @@ export const getTurnosHorariosSVC = async fecha => {
     return 500;
   }
 };
+
+export const getTurnoByIdSVC = async id_turno => {
+  try {
+    const turno = await prisma.turnos.findUnique({
+      where: {
+        id_turno: id_turno,
+      },
+      select: {
+        id_turno: true,
+        fecha: true,
+        hora: true,
+        estado: true,
+        info_medico: {
+          select: {
+            especialidad: true,
+            nombre: true,
+            apellido: true,
+            pfp: true,
+            direccion: true,
+          },
+        },
+      },
+    });
+
+    const notas = await prisma.notas.findMany({
+      where: {
+        id_turno: id_turno,
+      },
+      select: {
+        id_nota: true,
+        nota: true,
+        fecha: true,
+      },
+      orderBy: {
+        fecha: 'desc',
+      },
+    });
+
+    return { turno: turno, notas: notas };
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};

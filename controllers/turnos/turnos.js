@@ -1,5 +1,6 @@
 import {
   cancelarTurnoSVC,
+  getTurnoByIdSVC,
   getTurnosFechasSVC,
   getTurnosHorariosSVC,
   getTurnosMedicoSVC,
@@ -67,4 +68,14 @@ export const getTurnosHorariosCTL = async (req, res) => {
   if (horarios == 500) return res.status(500).json({ message: 'Internal Server Error' });
 
   return res.status(200).json({ data: horarios, message: 'Horarios encontrados' });
+};
+
+export const getTurnoByIdCTL = async (req, res) => {
+  const { id_turno } = req.params;
+
+  const info = await getTurnoByIdSVC(id_turno);
+
+  if (info == 500) return res.status(500).json({ message: 'Internal Server Error' });
+
+  return res.status(200).json({ data: info, message: 'Turno encontrado' });
 };

@@ -42,6 +42,7 @@ model notas {
   id_nota  String     @id @db.Char(36)
   id_turno String?    @db.Char(36)
   nota     String?    @db.Text
+  fecha    DateTime?  @db.DateTime(0)
   imagenes imagenes[]
   turnos   turnos?    @relation(fields: [id_turno], references: [id_turno], onDelete: Cascade, onUpdate: NoAction, map: "FK__turnos")
 
