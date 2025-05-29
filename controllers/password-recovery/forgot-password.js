@@ -62,7 +62,7 @@ export const changePasswordCTL = async (req, res) => {
   const password = req.body.contrasenia;
   const tokenData = await obtainUserTokenSVC(token);
 
-  if (tokenData == null) return res.status(200).send({ message: 'Token no valido' });
+  if (tokenData == null) return res.status(498).send({ message: 'Token no valido' });
   if (tokenData == 500) return res.status(500).send({ message: 'Internal Server Error' });
 
   if (tokenData.dateExpire < Date.now()) return res.status(498).send({ message: 'Token expirado' });
@@ -88,7 +88,7 @@ export const validateTokenCTL = async (req, res) => {
 
   const tokenData = await obtainUserTokenSVC(token);
 
-  if (tokenData == null) return res.status(200).send({ message: 'Token no valido' });
+  if (tokenData == null) return res.status(498).send({ message: 'Token no valido' });
   if (tokenData == 500) return res.status(500).send({ message: 'Internal Server Error' });
   if (tokenData.dateExpire < Date.now()) return res.status(498).send({ message: 'Token expirado' });
 
