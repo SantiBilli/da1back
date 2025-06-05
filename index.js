@@ -20,6 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const pfpDirectory = path.join(__dirname, 'uploads/pfp');
 const medicosDirectory = path.join(__dirname, 'uploads/medicos');
+const notasDirectory = path.join(__dirname, 'uploads/notas');
 
 const app = express();
 const PORT = process.env.PORT || 3550;
@@ -43,6 +44,7 @@ app.use('/api', profileRouter);
 
 app.use('/api/imagen-pfp/', express.static(pfpDirectory));
 app.use('/api/imagen-medico/', express.static(medicosDirectory));
+app.use('/api/imagen-notas/', express.static(notasDirectory));
 
 app.listen(PORT, () => {
   console.log(`Server listening on https//localhost:${PORT}`);

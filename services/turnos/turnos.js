@@ -180,6 +180,12 @@ export const getTurnoByIdSVC = async id_turno => {
         id_nota: true,
         nota: true,
         fecha: true,
+        imagenes: {
+          select:{
+            id_imagen: true,
+            imagen: true
+          }
+        }
       },
       orderBy: {
         fecha: 'desc',
