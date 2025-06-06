@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3550;
 
 app.disable('x-powered-by');
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '50mb' }));
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
