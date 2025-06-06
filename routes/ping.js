@@ -20,9 +20,7 @@ const pingRouter = Router();
  *               example: pong!
  */
 
-pingRouter.get('/ping', validateToken, (req, res) => {
-  console.log(req.jwtData);
-
+pingRouter.get('/ping', (req, res) => {
   res.send('pong!');
 });
 
