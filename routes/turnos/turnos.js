@@ -19,7 +19,7 @@ turnosRouter.put('/turnos-cancelar/:id_turno', validateToken, cancelarTurnoCTL);
 turnosRouter.get('/turnos/:status', validateToken, turnosStatusCTL);
 
 turnosRouter.get('/fechas/:id_medico', validateToken, getTurnosFechasCTL);
-turnosRouter.get('/horarios/:fecha', validateToken, getTurnosHorariosCTL);
+turnosRouter.get('/horarios/:id_medico/:fecha', validateToken, getTurnosHorariosCTL);
 turnosRouter.get('/turnos-info/:id_turno', validateToken, getTurnoByIdCTL);
 
 export default turnosRouter;

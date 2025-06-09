@@ -3,7 +3,6 @@ import {
   getTurnoByIdSVC,
   getTurnosFechasSVC,
   getTurnosHorariosSVC,
-  getTurnosMedicoSVC,
   getTurnosStatusSVC,
   reservarTurnoSVC,
 } from '../../services/turnos/turnos.js';
@@ -61,9 +60,9 @@ export const getTurnosFechasCTL = async (req, res) => {
 };
 
 export const getTurnosHorariosCTL = async (req, res) => {
-  const { fecha } = req.params;
+  const { id_medico, fecha } = req.params;
 
-  const horarios = await getTurnosHorariosSVC(fecha);
+  const horarios = await getTurnosHorariosSVC(fecha, id_medico);
 
   if (horarios == 500) return res.status(500).json({ message: 'Internal Server Error' });
 

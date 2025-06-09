@@ -1,26 +1,26 @@
 import prisma from '../../prisma/prisma.js';
 
-export const getTurnosMedicoSVC = async id_medico => {
-  try {
-    const turnos = await prisma.turnos.findMany({
-      where: {
-        id_medico: id_medico,
-        estado: 'disponible',
-      },
-      select: {
-        id_turno: true,
-        fecha: true,
-        hora: true,
-        estado: true,
-      },
-    });
+// export const getTurnosMedicoSVC = async id_medico => {
+//   try {
+//     const turnos = await prisma.turnos.findMany({
+//       where: {
+//         id_medico: id_medico,
+//         estado: 'disponible',
+//       },
+//       select: {
+//         id_turno: true,
+//         fecha: true,
+//         hora: true,
+//         estado: true,
+//       },
+//     });
 
-    return turnos;
-  } catch (error) {
-    console.log(error);
-    return 500;
-  }
-};
+//     return turnos;
+//   } catch (error) {
+//     console.log(error);
+//     return 500;
+//   }
+// };
 
 //Que no se muestren turnos pasados. fecha > new Date()
 
@@ -93,9 +93,15 @@ export const getTurnosStatusSVC = async (status, id_usuario) => {
 
 export const getTurnosFechasSVC = async id_medico => {
   try {
+    const today = new Date();
+
     let fechasMedico = await prisma.turnos.findMany({
       where: {
         id_medico: id_medico,
+        fecha: {
+          gte: today,
+        },
+        estado: 'disponible',
       },
       select: {
         fecha: true,
@@ -119,11 +125,12 @@ export const getTurnosFechasSVC = async id_medico => {
   }
 };
 
-export const getTurnosHorariosSVC = async fecha => {
+export const getTurnosHorariosSVC = async (fecha, id_medico) => {
   try {
     let horariosMedico = await prisma.turnos.findMany({
       where: {
         fecha: new Date(fecha),
+        id_medico: id_medico,
         estado: 'disponible',
       },
       select: {
@@ -181,11 +188,11 @@ export const getTurnoByIdSVC = async id_turno => {
         nota: true,
         fecha: true,
         imagenes: {
-          select:{
+          select: {
             id_imagen: true,
-            imagen: true
-          }
-        }
+            imagen: true,
+          },
+        },
       },
       orderBy: {
         fecha: 'desc',
