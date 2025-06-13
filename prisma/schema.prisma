@@ -75,6 +75,7 @@ model turnos {
   fecha                                 DateTime? @db.Date
   hora                                  DateTime? @db.Time(0)
   estado                                String?   @db.VarChar(50)
+  notificado                            Int?      @db.TinyInt
   estados                               estados[]
   notas                                 notas[]
   usuarios_turnos_id_pacienteTousuarios usuarios? @relation("turnos_id_pacienteTousuarios", fields: [id_paciente], references: [id_usuario], onDelete: Cascade, onUpdate: NoAction, map: "FK__usuarios")
