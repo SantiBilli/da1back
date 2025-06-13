@@ -16,9 +16,11 @@ const ejecutarNotificaciones = async () => {
     const turnos = await prisma.turnos.findMany({
       where: {
         notificado: null,
-        fecha: new Date(fecha),
+        fecha: {
+          lte: new Date(fecha),
+        },
         hora: {
-          lt: new Date(`${fecha}T${hora}`),
+          lte: new Date(`${fecha}T${hora}`),
         },
       },
       include: {
