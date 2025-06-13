@@ -7,20 +7,20 @@ const ejecutarNotificaciones = async () => {
   const ahoraUTC3 = new Date(ahoraUTC.getTime() - 3 * 60 * 60 * 1000);
   const en24h = new Date(ahoraUTC3.getTime() + 24 * 60 * 60 * 1000);
 
-  const fecha = en24h.toISOString().split('T')[0];
-  const hora = en24h.toISOString().split('T')[1].split('.')[0];
+  // const fecha = en24h.toISOString().split('T')[0];
+  // const hora = en24h.toISOString().split('T')[1].split('.')[0];
 
-  console.log(`Buscando turnos entre ${fecha} y ${hora}`);
+  const fechaHoy = ahoraUTC3.toISOString().split('T')[0];
+  const fechaManiana = en24h.toISOString().split('T')[0];
+
+  // console.log(`Buscando turnos antes de ${fecha} a las ${hora}`);
 
   try {
     const turnos = await prisma.turnos.findMany({
       where: {
         notificado: null,
         fecha: {
-          lte: new Date(fecha),
-        },
-        hora: {
-          lte: new Date(`${fecha}T${hora}`),
+          in: [new Date(fechaHoy), new Date(fechaManiana)],
         },
       },
       include: {
@@ -28,26 +28,37 @@ const ejecutarNotificaciones = async () => {
       },
     });
 
-    for (let turno of turnos) {
-      const usuario = turno.usuarios_turnos_id_pacienteTousuarios;
+    for (const turno of turnos) {
+      if (!turno.fecha || !turno.hora) continue;
 
-      console.log(usuario.mail, turno.id_turno);
+      const fechaStr = turno.fecha.toISOString().split('T')[0];
+      const horaStr = turno.hora.toTimeString().split(' ')[0];
+      const fechaHoraTurno = new Date(`${fechaStr}T${horaStr}`);
 
-      if (!usuario?.mail) continue;
+      console.log(fechaHoraTurno, ahoraUTC3, en24h);
 
-      await enviarMailTurno({
-        to: usuario.mail,
-        nombre: usuario.nombre ?? 'Paciente',
-        fecha: turno.fecha.toISOString().split('T')[0],
-        hora: turno.hora.toTimeString().split(' ')[0],
-      });
+      if (fechaHoraTurno > ahoraUTC3 && fechaHoraTurno <= en24h) {
+        const usuario = turno.usuarios_turnos_id_pacienteTousuarios;
+        if (!usuario?.mail) continue;
 
-      console.log(`Mail enviado a ${usuario.mail} por turno ${turno.id_turno}`);
+        await enviarMailTurno({
+          to: usuario.mail,
+          nombre: usuario.nombre ?? 'Paciente',
+          fecha: fechaStr,
+          hora: new Date(turno.hora.getTime() + 3 * 60 * 60 * 1000).toTimeString().split(' ')[0],
+        });
 
-      await prisma.turnos.update({
-        where: { id_turno: turno.id_turno },
-        data: { notificado: 1 },
-      });
+        await prisma.turnos.update({
+          where: { id_turno: turno.id_turno },
+          data: { notificado: 1 },
+        });
+
+        console.log(
+          `Notificado ${usuario.mail} para ${fechaStr} ${
+            new Date(turno.hora.getTime() + 3 * 60 * 60 * 1000).toTimeString().split(' ')[0]
+          }`
+        );
+      }
     }
   } catch (err) {
     console.error('Error en cron de turnos:', err);
