@@ -44,8 +44,14 @@ export const forgotPasswordCTL = async (req, res) => {
     to: bodyParams.mail,
     subject: 'Cambiar Contraseña',
     html: `
-                  <p>Token de recuperacion: ${resetToken}</p>
-                  `,
+    <div style="max-width: 400px; margin: 0 auto; background-color: #ffffff; border: 1px solid #cceeff; border-radius: 10px; padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+      <h2 style="color: #00aaff; margin-bottom: 10px;">Recuperación de Contraseña</h2>
+      <p style="color: #333;">Usa el siguiente token para cambiar tu contraseña:</p>
+      <div style="margin-top: 15px; padding: 10px; background-color: #e6f7ff; color: #0077aa; font-size: 18px; border-radius: 6px; border: 1px dashed #00aaff; display: inline-block;">
+        ${resetToken}
+      </div>
+    </div>
+  `,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
