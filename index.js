@@ -15,7 +15,8 @@ import changePasswordRouter from './routes/profile/change-password.js';
 import profileRouter from './routes/profile/profile.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import './controllers/notifications/cron.js';
+import './controllers/cron/notificacion.js';
+import './controllers/cron/finalizarTurnosPasados.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

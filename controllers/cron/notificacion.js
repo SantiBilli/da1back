@@ -1,5 +1,5 @@
 import prisma from '../../prisma/prisma.js';
-import enviarMailTurno from '../notifications/notifications.js';
+import enviarMailTurno from './email.js';
 import cron from 'node-cron';
 
 const ejecutarNotificaciones = async () => {
@@ -7,18 +7,14 @@ const ejecutarNotificaciones = async () => {
   const ahoraUTC3 = new Date(ahoraUTC.getTime() - 3 * 60 * 60 * 1000);
   const en24h = new Date(ahoraUTC3.getTime() + 24 * 60 * 60 * 1000);
 
-  // const fecha = en24h.toISOString().split('T')[0];
-  // const hora = en24h.toISOString().split('T')[1].split('.')[0];
-
   const fechaHoy = ahoraUTC3.toISOString().split('T')[0];
   const fechaManiana = en24h.toISOString().split('T')[0];
-
-  // console.log(`Buscando turnos antes de ${fecha} a las ${hora}`);
 
   try {
     const turnos = await prisma.turnos.findMany({
       where: {
         notificado: null,
+        estado: 'reservado',
         fecha: {
           in: [new Date(fechaHoy), new Date(fechaManiana)],
         },
