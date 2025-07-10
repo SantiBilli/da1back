@@ -24,9 +24,9 @@ npm install
 Crear un archivo `.env` en la raíz del proyecto con las variables necesarias:
 
 ```
-DATABASE_URL=mysql://usuario:contraseña@host:puerto/basededatos
-API_KEY=tu_clave_secreta
 PORT=3500
+API_KEY = '6d20959a-0446-4784-9381-afb5a471ee91'
+DATABASE_URL="mysql://santiago:160103@vps-4215636-x.dattaweb.com:3306/da1mysql?schema=public&connection_limit=50"
 ```
 
 ### 4. Ejecutar servidor en desarrollo
