@@ -78,6 +78,6 @@ npm run dev
 
 ---
 
-## 👨‍⚕️ Autor
+## 👨‍⚕️ Autores
 
 Desarrollado por **Santiago Felipe Billinghurst, Juana Estarli y Nicolas Estepañuk**
