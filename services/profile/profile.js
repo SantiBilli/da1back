@@ -89,3 +89,23 @@ export const deleteProfileSVC = async id_usuario => {
     return 500;
   }
 };
+
+export const liberarTurnosDeUsuarioSVC = async id_usuario => {
+  try {
+    const turnosActualizados = await prisma.turnos.updateMany({
+      where: {
+        id_paciente: id_usuario,
+        estado: 'reservado',
+      },
+      data: {
+        estado: 'disponible',
+        id_paciente: null,
+      },
+    });
+
+    return turnosActualizados;
+  } catch (error) {
+    console.error('Error al liberar turnos:', error);
+    return 500;
+  }
+};
